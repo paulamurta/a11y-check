@@ -50,9 +50,9 @@ export function Card({
 
         <div style={{ marginTop: 16 }}>
           {invalid ? (
-            <Button iconUrl={iconEdit} label="Salvar" />
+            <Button iconUrl={iconEdit} label="Save" />
           ) : (
-            <Button label="Ver detalhes" />
+            <Button label="View details" />
           )}
         </div>
       </CardContent>

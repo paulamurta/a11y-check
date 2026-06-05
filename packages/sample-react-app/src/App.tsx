@@ -11,11 +11,11 @@ export default function App() {
       <header className="hero">
         <span className="badge">Shift-Left Accessibility Testing</span>
 
-        <h1 className="title">Ambiente de Testes de Acessibilidade</h1>
+        <h1 className="title">Accessibility Testing Environment</h1>
 
         <p className="description">
-          Aplicação React desenvolvida para validação automatizada de problemas
-          de acessibilidade em componentes reutilizáveis.
+          React application built for automated accessibility validation in
+          reusable components.
         </p>
       </header>
 
@@ -24,20 +24,20 @@ export default function App() {
           <h2>Buttons</h2>
 
           <p>
-            Comparação entre implementações acessíveis e inacessíveis de botões
-            reutilizáveis.
+            Comparison between accessible and inaccessible button
+            implementations.
           </p>
         </div>
 
         <div className="content-grid">
-          {/* válido */}
-          <Button label="Salvar" />
+          {/* valid */}
+          <Button label="Save" />
 
-          {/* inválido */}
+          {/* invalid */}
           <Button iconUrl={iconEdit} />
 
-          {/* inválido */}
-          <Button disabled label="Comprar" />
+          {/* invalid */}
+          <Button disabled label="Buy" />
         </div>
       </section>
 
@@ -45,26 +45,26 @@ export default function App() {
         <div className="section-header">
           <h2>Inputs</h2>
 
-          <p>Exemplos de campos com e sem identificação acessível.</p>
+          <p>Examples of fields with and without accessible identification.</p>
         </div>
 
         <div className="content-column">
-          <Input label="Nome" placeholder="Digite seu nome" />
+          <Input label="Name" placeholder="Enter your name" />
 
-          <Input required label="E-mail" placeholder="Digite seu e-mail" />
+          <Input required label="Email" placeholder="Enter your email" />
 
           <Input
-            error="Senha inválida"
-            label="Senha"
-            placeholder="Digite sua senha"
+            error="Invalid password"
+            label="Password"
+            placeholder="Enter your password"
           />
 
-          <Input invalidAccessibility placeholder="Campo sem label" />
+          <Input invalidAccessibility placeholder="Field without label" />
 
           <Input
             invalidAccessibility
             required
-            placeholder="Campo obrigatório sem identificação"
+            placeholder="Required field without identification"
           />
         </div>
       </section>
@@ -74,30 +74,30 @@ export default function App() {
           <h2>Cards</h2>
 
           <p>
-            Comparação entre cenários válidos e inválidos de acessibilidade em
-            componentes compostos.
+            Comparison between valid and invalid accessibility scenarios in
+            composite components.
           </p>
         </div>
 
         <div className="cards-grid">
           <Card
-            title="Card acessível"
+            title="Accessible card"
             src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&auto=format&fit=crop"
-            alt="Quadro abstrato com manchas coloridas em tons de azul, vermelho e amarelo"
-            caption="Imagem com texto alternativo"
+            alt="Abstract painting with colorful blue, red, and yellow strokes"
+            caption="Image with alternative text"
           />
 
           <Card
             invalidAccessibility
-            title="Card inacessível"
+            title="Inaccessible card"
             src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&auto=format&fit=crop"
-            caption="Imagem sem atributo alt"
+            caption="Image without alt attribute"
           />
         </div>
       </section>
 
       <footer className="footer">
-        TCC • Testes Automatizados de Acessibilidade em React e Material UI
+        Automated Accessibility Testing in React and Material UI
       </footer>
     </div>
   );

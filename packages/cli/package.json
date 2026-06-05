@@ -1,0 +1,17 @@
+{
+  "name": "a11y-cli",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "a11y-check": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "playwright": "^1.52.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.12.3",
+    "tsx": "^4.19.4",
+    "typescript": "~6.0.2"
+  }
+}

@@ -2,7 +2,7 @@ import TextField from "@mui/material/TextField";
 import type { InputProps } from "./Input.types";
 
 const resolveError = (error: InputProps["error"]) =>
-  typeof error === "string" ? error : error ? "Campo inválido" : undefined;
+  typeof error === "string" ? error : error ? "Invalid field" : undefined;
 
 export function Input({
   label,
