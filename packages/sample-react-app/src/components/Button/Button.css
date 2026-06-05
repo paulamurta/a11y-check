@@ -1,0 +1,5 @@
+.btn-icon {
+  display: block;
+  margin-right: 8px;
+  filter: brightness(0) invert(1);
+}
