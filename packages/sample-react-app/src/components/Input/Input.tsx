@@ -16,6 +16,7 @@ export function Input({
   return (
     <TextField
       data-component="Input"
+      data-source-file={import.meta.url}
       fullWidth={fullWidth}
       label={invalidAccessibility ? undefined : label}
       error={!invalidAccessibility && Boolean(helperText)}

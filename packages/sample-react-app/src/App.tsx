@@ -7,7 +7,7 @@ import { Input } from "./components/Input/Input";
 
 export default function App() {
   return (
-    <div className="app">
+    <div className="app" data-page-file={import.meta.url}>
       <header className="hero">
         <span className="badge">Shift-Left Accessibility Testing</span>
 

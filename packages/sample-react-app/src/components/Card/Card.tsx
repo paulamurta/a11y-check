@@ -17,6 +17,7 @@ export function Card({
   return (
     <MuiCard
       data-component="Card"
+      data-source-file={import.meta.url}
       className={className}
       sx={{
         border: 1,
