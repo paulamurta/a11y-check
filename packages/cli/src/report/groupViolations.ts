@@ -1,4 +1,4 @@
-import { RULE_LABELS } from "../rules/ruleLabels.js";
+import { RULE_HINTS, RULE_LABELS } from "../rules/ruleLabels.js";
 import type { ComponentReport, Violation } from "../types.js";
 
 export function groupViolations(violations: Violation[]): ComponentReport[] {
@@ -8,7 +8,7 @@ export function groupViolations(violations: Violation[]): ComponentReport[] {
       instanceKeys: Set<string>;
       ruleInstances: Map<
         Violation["ruleId"],
-        Map<string, { label: string; usageFile: string | null }>
+        Map<string, { id: string | null; label: string; usageFile: string | null }>
       >;
     }
   >();
@@ -38,6 +38,7 @@ export function groupViolations(violations: Violation[]): ComponentReport[] {
 
     if (!instances.has(violation.instanceKey)) {
       instances.set(violation.instanceKey, {
+        id: violation.id,
         label: violation.instanceLabel,
         usageFile: violation.usageFile,
       });
@@ -52,6 +53,7 @@ export function groupViolations(violations: Violation[]): ComponentReport[] {
       rules: Array.from(report.ruleInstances.entries()).map(
         ([ruleId, instances]) => ({
           label: RULE_LABELS[ruleId],
+          hint: RULE_HINTS[ruleId],
           instances: Array.from(instances.values()),
         }),
       ),

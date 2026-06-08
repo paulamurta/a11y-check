@@ -36,16 +36,65 @@ function describeButtonInstance(root: Element): string {
     : "<Button />";
 }
 
-function describeCardInstance(root: Element): string {
-  const title =
-    root.querySelector("h3, h4")?.textContent?.trim() ??
-    root.querySelector('[class*="Typography"]')?.textContent?.trim();
+function describeLinkInstance(root: Element): string {
+  const props: string[] = [`href="${root.getAttribute("href") ?? "#"}"`];
 
-  if (title) {
-    return `<Card title="${title}" />`;
+  if (root.querySelector("img")) {
+    props.push("iconUrl={iconEdit}");
   }
 
-  return "<Card />";
+  const visibleText = getVisibleText(root);
+
+  if (visibleText) {
+    props.push(`label="${visibleText}"`);
+  }
+
+  return `<Link ${props.join(" ")} />`;
+}
+
+function describeAvatarInstance(root: Element): string {
+  const img = root.querySelector("img");
+  const alt = img?.getAttribute("alt");
+
+  if (!img?.hasAttribute("alt")) {
+    return "<Avatar src={profilePhoto} invalidAccessibility />";
+  }
+
+  if (alt === "image") {
+    return '<Avatar src={profilePhoto} alt="image" />';
+  }
+
+  if (alt) {
+    return `<Avatar src={profilePhoto} alt="${alt}" />`;
+  }
+
+  return "<Avatar src={profilePhoto} />";
+}
+
+function describeInputInstance(root: Element): string {
+  const input = root.querySelector("input, textarea, select");
+  const props: string[] = [];
+  const label = root.querySelector("label")?.textContent?.trim();
+
+  if (label) {
+    props.push(`label="${label}"`);
+  }
+
+  const placeholder = input?.getAttribute("placeholder");
+
+  if (placeholder) {
+    props.push(`placeholder="${placeholder}"`);
+  }
+
+  if (input?.hasAttribute("required")) {
+    props.push("required");
+  }
+
+  if (props.length > 0) {
+    return `<Input ${props.join(" ")} />`;
+  }
+
+  return "<Input invalidAccessibility />";
 }
 
 function describeImageInstance(root: Element, componentName: string): string {
@@ -70,12 +119,16 @@ export function describeInstance(
     return describeButtonInstance(componentRoot);
   }
 
-  if (componentName === "Card") {
-    if (targetElement.tagName.toLowerCase() === "img") {
-      return describeCardInstance(componentRoot);
-    }
+  if (componentName === "Link") {
+    return describeLinkInstance(componentRoot);
+  }
 
-    return describeCardInstance(componentRoot);
+  if (componentName === "Avatar") {
+    return describeAvatarInstance(componentRoot);
+  }
+
+  if (componentName === "Input") {
+    return describeInputInstance(componentRoot);
   }
 
   if (targetElement.tagName.toLowerCase() === "img") {

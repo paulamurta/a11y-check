@@ -6,6 +6,7 @@ import { hasMissingAlt } from "../rules/missingAlt.js";
 import {
   findUsageFile,
   getComponentContext,
+  getComponentId,
 } from "../utils/componentContext.js";
 import { describeInstance } from "../utils/instanceLabel.js";
 import {
@@ -30,6 +31,7 @@ function createViolation(
     componentName: context.name,
     componentSourceFile: context.sourceFile,
     instanceKey,
+    id: getComponentId(context.root),
     instanceLabel: describeInstance(
       context.root,
       context.name,
@@ -46,7 +48,9 @@ export function analyzeDom(html: string): Violation[] {
   const { document } = window;
   const violations: Violation[] = [];
 
-  for (const element of document.querySelectorAll("button, [role='button']")) {
+  for (const element of document.querySelectorAll(
+    "button, [role='button'], a[href], input, textarea, select",
+  )) {
     if (hasMissingAccessibleName(element, document)) {
       const violation = createViolation("missing-accessible-name", element);
 

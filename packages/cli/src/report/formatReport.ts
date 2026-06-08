@@ -2,10 +2,17 @@ import type { ComponentReport } from "../types.js";
 import { theme } from "../utils/terminalTheme.js";
 
 function formatInstance(instance: {
+  id: string | null;
   label: string;
   usageFile: string | null;
 }): string {
-  const lines = [`  ${theme.muted("•")} ${theme.instance(instance.label)}`];
+  const idPrefix = instance.id
+    ? `${theme.accent(`[${instance.id}]`)} `
+    : "";
+
+  const lines = [
+    `  ${theme.muted("•")} ${idPrefix}${theme.instance(instance.label)}`,
+  ];
 
   if (instance.usageFile) {
     lines.push(`    ${theme.muted(instance.usageFile)}`);
@@ -24,7 +31,10 @@ function formatComponentReport(report: ComponentReport): string {
   ];
 
   for (const rule of report.rules) {
-    lines.push(`${theme.rule("•")} ${theme.rule(rule.label)}`, "");
+    lines.push(
+      `${theme.rule("•")} ${theme.rule(rule.label)} ${theme.muted(`— ${rule.hint}`)}`,
+      "",
+    );
 
     for (const instance of rule.instances) {
       lines.push(formatInstance(instance));

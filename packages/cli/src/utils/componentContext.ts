@@ -42,6 +42,16 @@ export function getComponentContext(element: Element): ComponentContext | null {
   };
 }
 
+export function getComponentId(componentRoot: Element): string | null {
+  return (
+    componentRoot.getAttribute("id") ??
+    componentRoot
+      .querySelector("input, textarea, select")
+      ?.getAttribute("id") ??
+    null
+  );
+}
+
 export function findUsageFile(componentRoot: Element): string | null {
   let current = componentRoot.parentElement;
 
