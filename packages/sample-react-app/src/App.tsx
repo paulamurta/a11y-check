@@ -43,7 +43,10 @@ export default function App() {
         <div className="section-header">
           <h2>Inputs</h2>
 
-          <p>Examples of fields with and without accessible identification.</p>
+          <p>
+            Valid fields plus three failure cases: invalid ARIA references and
+            duplicate ids.
+          </p>
         </div>
 
         <div className="content-column">
@@ -61,23 +64,27 @@ export default function App() {
           />
 
           <Input
-            id="input-password"
-            error="Invalid password"
-            label="Password"
-            placeholder="Enter your password"
+            id="input-invalid-aria"
+            label="Notes"
+            placeholder="Enter your notes"
+            slotProps={{
+              htmlInput: {
+                "aria-labelledby": "missing-label-id",
+                "aria-describedby": "missing-description-id",
+              },
+            }}
           />
 
           <Input
-            id="input-no-label"
-            invalidAccessibility
-            placeholder="Field without label"
+            id="input-duplicate"
+            label="First duplicate field"
+            placeholder="Duplicate id example"
           />
 
           <Input
-            id="input-required-no-label"
-            invalidAccessibility
-            required
-            placeholder="Required field without identification"
+            id="input-duplicate"
+            label="Second duplicate field"
+            placeholder="Duplicate id example"
           />
         </div>
       </section>
