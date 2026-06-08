@@ -1,5 +1,6 @@
-export type ButtonProps = {
-  id?: string;
+import type { WithId } from "../shared.types";
+
+export type ButtonProps = WithId & {
   label?: string;
   iconUrl?: string;
   loading?: boolean;

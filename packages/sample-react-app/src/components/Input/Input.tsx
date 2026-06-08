@@ -5,6 +5,7 @@ const resolveError = (error: InputProps["error"]) =>
   typeof error === "string" ? error : error ? "Invalid field" : undefined;
 
 export function Input({
+  id,
   label,
   error,
   invalidAccessibility = false,
@@ -17,6 +18,7 @@ export function Input({
     <TextField
       data-component="Input"
       data-source-file={import.meta.url}
+      id={id}
       fullWidth={fullWidth}
       label={invalidAccessibility ? undefined : label}
       error={!invalidAccessibility && Boolean(helperText)}

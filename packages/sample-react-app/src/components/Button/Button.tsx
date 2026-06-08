@@ -6,6 +6,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import type { ButtonProps } from "./Button.types";
 
 export function Button({
+  id,
   label,
   iconUrl,
   loading = false,
@@ -19,6 +20,7 @@ export function Button({
     <MuiButton
       data-component="Button"
       data-source-file={import.meta.url}
+      id={id}
       variant="contained"
       color="primary"
       disabled={disabled || loading}
