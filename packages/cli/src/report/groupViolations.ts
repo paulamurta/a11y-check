@@ -5,7 +5,10 @@ type MutableInstanceReport = {
   id: string | null;
   label: string;
   usageFile: string | null;
-  problems: Map<Violation["ruleId"], { label: string; hint: string }>;
+  problems: Map<
+    Violation["ruleId"],
+    { ruleId: Violation["ruleId"]; label: string; hint: string }
+  >;
 };
 
 export function groupViolations(violations: Violation[]): ComponentReport[] {
@@ -47,6 +50,7 @@ export function groupViolations(violations: Violation[]): ComponentReport[] {
 
     if (!instance.problems.has(violation.ruleId)) {
       instance.problems.set(violation.ruleId, {
+        ruleId: violation.ruleId,
         label: RULE_LABELS[violation.ruleId],
         hint: RULE_HINTS[violation.ruleId],
       });

@@ -16,6 +16,7 @@ export type Violation = {
 };
 
 export type InstanceProblem = {
+  ruleId: RuleId;
   label: string;
   hint: string;
 };
