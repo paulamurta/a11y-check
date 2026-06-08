@@ -27,18 +27,45 @@ npm run a11y-check
 Expected output:
 
 ```
-Application found.
 Capturing DOM...
+Application found.
 DOM captured successfully.
+
+🧩 Component: <Button>
+📄 src/components/Button/Button.tsx
+...
 ```
+
+The command exits with code `1` when accessibility issues are found.
 
 ## How it works
 
-1. Playwright opens `http://localhost:5173`
-2. Waits for the page to finish rendering
-3. Captures the DOM with `page.content()`
+1. Playwright opens `http://localhost:5173` and captures the rendered HTML
+2. JSDOM parses the HTML in Node.js
+3. Rules run on buttons and images in the rendered DOM
+4. Issues are grouped by `data-component` and `data-source-file`
+5. A text report is printed to the terminal
 
 Analysis is performed on the **rendered DOM**, not on static TSX source code.
+
+## Rules (v1)
+
+| Rule | Target | Condition |
+|------|--------|-----------|
+| Missing accessible name | `button`, `[role="button"]` | No `aria-label`, `aria-labelledby`, `title`, or visible text |
+| Missing alt | `img` | `alt` attribute missing or empty |
+
+## Project structure
+
+```
+src/
+  capture/     # Playwright DOM capture
+  analyze/     # JSDOM traversal and rule execution
+  rules/       # Accessibility rules
+  report/      # Grouping and terminal output
+  utils/       # Component context, accessible name helpers
+  index.ts     # CLI entry point
+```
 
 ## Scripts
 

@@ -39,4 +39,4 @@ The CLI expects the app at `http://localhost:5173`.
 
 ## Status
 
-Current CLI version only captures the rendered DOM. Accessibility rules and component-grouped reports are planned for future iterations.
+The CLI captures the rendered DOM, runs basic accessibility rules (missing accessible name on buttons, missing `alt` on images), and prints a report grouped by component.
