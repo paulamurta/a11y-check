@@ -1,30 +1,26 @@
-import { chromium } from "playwright";
+import { analyzeDom } from "./analyze/analyzeDom.js";
+import { captureDom } from "./capture/captureDom.js";
+import { formatReport } from "./report/formatReport.js";
+import { groupViolations } from "./report/groupViolations.js";
 
 const APP_URL = "http://localhost:5173";
 
 async function main(): Promise<void> {
-  const browser = await chromium.launch();
-  const page = await browser.newPage();
+  console.log("Capturing DOM...");
 
-  try {
-    const response = await page.goto(APP_URL, {
-      waitUntil: "networkidle",
-    });
+  const html = await captureDom(APP_URL);
 
-    if (!response || !response.ok()) {
-      throw new Error(
-        `Could not reach ${APP_URL}. Make sure the dev server is running.`,
-      );
-    }
+  console.log("Application found.");
+  console.log("DOM captured successfully.");
+  console.log("");
 
-    console.log("Application found.");
-    console.log("Capturing DOM...");
+  const violations = analyzeDom(html);
+  const reports = groupViolations(violations);
 
-    await page.content();
+  console.log(formatReport(reports));
 
-    console.log("DOM captured successfully.");
-  } finally {
-    await browser.close();
+  if (violations.length > 0) {
+    process.exit(1);
   }
 }
 
