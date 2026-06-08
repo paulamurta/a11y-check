@@ -1,13 +1,14 @@
 import type { ComponentReport } from "../types.js";
+import { theme } from "../utils/terminalTheme.js";
 
 function formatInstance(instance: {
   label: string;
   usageFile: string | null;
 }): string {
-  const lines = [`  * ${instance.label}`];
+  const lines = [`  ${theme.muted("•")} ${theme.instance(instance.label)}`];
 
   if (instance.usageFile) {
-    lines.push(`    ${instance.usageFile}`);
+    lines.push(`    ${theme.muted(instance.usageFile)}`);
   }
 
   return lines.join("\n");
@@ -15,15 +16,15 @@ function formatInstance(instance: {
 
 function formatComponentReport(report: ComponentReport): string {
   const lines = [
-    `🧩 Component: <${report.name}>`,
-    `📄 ${report.sourceFile}`,
+    theme.component(`▸ ${report.name}`),
+    theme.muted(`  ${report.sourceFile}`),
     "",
-    `✖ Instances with error: ${report.instanceCount}`,
+    theme.error(`✖ ${report.instanceCount} instance(s) with error`),
     "",
   ];
 
   for (const rule of report.rules) {
-    lines.push(`• ${rule.label}`, "");
+    lines.push(`${theme.rule("•")} ${theme.rule(rule.label)}`, "");
 
     for (const instance of rule.instances) {
       lines.push(formatInstance(instance));
@@ -36,8 +37,12 @@ function formatComponentReport(report: ComponentReport): string {
 
 export function formatReport(reports: ComponentReport[]): string {
   if (reports.length === 0) {
-    return "No accessibility issues found.";
+    return theme.success("✔ No accessibility issues found.");
   }
 
-  return reports.map(formatComponentReport).join("\n\n");
+  const body = reports.map(formatComponentReport).join(
+    `\n\n${theme.separator("─".repeat(48))}\n\n`,
+  );
+
+  return body;
 }

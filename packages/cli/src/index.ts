@@ -1,17 +1,30 @@
+import ora from "ora";
+
 import { analyzeDom } from "./analyze/analyzeDom.js";
 import { captureDom } from "./capture/captureDom.js";
 import { formatReport } from "./report/formatReport.js";
 import { groupViolations } from "./report/groupViolations.js";
+import { formatApplicationFound, formatSummary, theme } from "./utils/terminalTheme.js";
 
 const APP_URL = "http://localhost:5173";
 
 async function main(): Promise<void> {
-  console.log("Capturing DOM...");
+  const spinner = ora({
+    text: `Capturing DOM from ${APP_URL}...`,
+    color: "cyan",
+  }).start();
 
-  const html = await captureDom(APP_URL);
+  let html: string;
 
-  console.log("Application found.");
-  console.log("DOM captured successfully.");
+  try {
+    html = await captureDom(APP_URL);
+    spinner.succeed(formatApplicationFound(APP_URL));
+  } catch (error) {
+    spinner.fail(theme.error("Failed to capture DOM."));
+    throw error;
+  }
+
+  console.log(theme.success("✔ DOM captured successfully."));
   console.log("");
 
   const violations = analyzeDom(html);
@@ -20,12 +33,14 @@ async function main(): Promise<void> {
   console.log(formatReport(reports));
 
   if (violations.length > 0) {
+    console.log("");
+    console.log(formatSummary(reports.length, violations.length));
     process.exit(1);
   }
 }
 
 main().catch((error: unknown) => {
   const message = error instanceof Error ? error.message : String(error);
-  console.error(message);
+  console.error(theme.error(message));
   process.exit(1);
 });
