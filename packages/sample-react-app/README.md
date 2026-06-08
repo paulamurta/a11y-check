@@ -32,7 +32,8 @@ npm install
 |-----------|-------------|
 | `Button` | Button with label, icon, and loading states |
 | `Input` | Text field wrapper around MUI `TextField` |
-| `Card` | Composite card with image, caption, and action button |
+| `Link` | Link with text, icon-only, or missing identification |
+| `Avatar` | Profile photo with descriptive, missing, or generic alt text |
 
 Some instances intentionally omit accessible labels or image `alt` text for testing purposes.
 
@@ -43,6 +44,7 @@ Reusable components expose metadata in the rendered DOM:
 ```tsx
 data-component="Button"
 data-source-file={import.meta.url}
+id="button-save"
 ```
 
 These attributes allow the CLI to attribute DOM issues back to the source component.

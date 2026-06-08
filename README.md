@@ -32,6 +32,45 @@ npm run a11y-check
 
 The CLI expects the app at `http://localhost:5173`.
 
+## CLI output
+
+The command prints three sections: capture status, a component-grouped report, and a short summary.
+
+```
+⠋ Capturing DOM from http://localhost:5173...
+✓ Application found at localhost:5173
+✔ DOM captured successfully.
+
+▸ Button
+  src/components/Button/Button.tsx
+
+✖ 2 instance(s) with error
+
+• Missing accessible name
+
+  • <Button iconUrl={iconEdit} />
+    src/App.tsx
+
+• Missing alt
+
+  • <Button iconUrl={iconEdit} />
+    src/App.tsx
+
+────────────────────────────────────────────────
+
+▸ Link
+  src/components/Link/Link.tsx
+  ...
+
+2 component(s) · 6 issue(s)
+```
+
+Each component block shows the component name, its source file, how many instances failed, the rules that were violated, and a JSX-like description of each instance with the page file where it was rendered.
+
+If everything passes, you get `✔ No accessibility issues found.` and exit code `0`. When issues are found, exit code is `1`.
+
+In interactive terminals the output uses colors for readability. Set `NO_COLOR=1` to disable them.
+
 ## Documentation
 
 - [Sample React App README](packages/sample-react-app/README.md)
