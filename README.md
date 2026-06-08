@@ -34,7 +34,7 @@ The CLI expects the app at `http://localhost:5173`.
 
 ## CLI output
 
-The command prints three sections: capture status, a component-grouped report, and a short summary.
+The terminal report has three parts: capture status, component blocks grouped by instance, and a final summary.
 
 ```
 ⠋ Capturing DOM from http://localhost:5173...
@@ -55,12 +55,6 @@ The command prints three sections: capture status, a component-grouped report, a
 
 ────────────────────────────────────────────────
 
-▸ Input
-  src/components/Input/Input.tsx
-  ...
-
-────────────────────────────────────────────────
-
 Summary
 
 ✖ 4 component(s) with issues
@@ -78,6 +72,25 @@ Each component block shows:
 If everything passes, the **Summary** block shows `✔ No accessibility issues found.` and exit code `0`. When issues are found, exit code is `1`.
 
 In interactive terminals the output uses colors for readability. Set `NO_COLOR=1` to disable them.
+
+## JSON export
+
+Export a structured report for comparison with Lighthouse or other tools:
+
+```bash
+cd packages/cli
+npm run a11y-check:export
+```
+
+This writes `a11y-check.json` in `packages/cli/`. Generated report files are gitignored.
+
+The JSON includes:
+
+- `summary` — components with issues and total issue count
+- `byRule` — issue count per rule id (for comparison tables)
+- `components` — same instance-first grouping as the terminal report
+
+See the [CLI README](packages/cli/README.md#json-export) for preview mode and custom output paths.
 
 ## Accessibility rules
 

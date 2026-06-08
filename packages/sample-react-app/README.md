@@ -33,9 +33,11 @@ The app renders four component groups in `src/App.tsx`:
 | Section | Valid examples | Intentional failures |
 |---------|----------------|----------------------|
 | **Buttons** | labeled button | icon-only button, disabled button without visible name |
-| **Inputs** | labeled fields | invalid ARIA references, duplicate `id` |
+| **Inputs** | 2 labeled fields | invalid ARIA references, duplicate `id` (3 problematic instances) |
 | **Links** | text link | icon-only link, link without accessible name |
 | **Avatars** | descriptive `alt` | missing `alt`, generic `alt` (`"image"`) |
+
+With the current demo, the CLI reports **12 distinct issues** across **4 components**.
 
 ## Components
 
@@ -63,6 +65,7 @@ These attributes allow the CLI to attribute DOM issues back to the source compon
 ## Running with the CLI
 
 1. Start this app: `npm run dev`
-2. From `packages/cli`, run: `npm run a11y-check`
+2. From `packages/cli`, run the terminal report: `npm run a11y-check`
+3. Or export JSON: `npm run a11y-check:export`
 
-See the [CLI README](../cli/README.md) for the full list of rules and report format.
+See the [CLI README](../cli/README.md) for rules, report format, and Lighthouse comparison.
