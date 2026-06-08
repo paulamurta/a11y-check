@@ -1,4 +1,9 @@
-export type RuleId = "missing-accessible-name" | "missing-alt";
+export type RuleId =
+  | "missing-accessible-name"
+  | "missing-alt"
+  | "duplicate-id"
+  | "invalid-aria-labelledby"
+  | "invalid-aria-describedby";
 
 export type Violation = {
   ruleId: RuleId;
@@ -10,19 +15,22 @@ export type Violation = {
   usageFile: string | null;
 };
 
-export type RuleReport = {
+export type InstanceProblem = {
   label: string;
   hint: string;
-  instances: {
-    id: string | null;
-    label: string;
-    usageFile: string | null;
-  }[];
+};
+
+export type InstanceReport = {
+  id: string | null;
+  label: string;
+  usageFile: string | null;
+  problems: InstanceProblem[];
 };
 
 export type ComponentReport = {
   name: string;
   sourceFile: string;
-  instanceCount: number;
-  rules: RuleReport[];
+  instancesWithError: number;
+  distinctIssues: number;
+  instances: InstanceReport[];
 };

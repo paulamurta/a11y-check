@@ -1,8 +1,13 @@
 import { JSDOM } from "jsdom";
 
 import type { Violation } from "../types.js";
+import { findDuplicateIdElements } from "../rules/duplicateId.js";
 import { hasMissingAccessibleName } from "../rules/missingAccessibleName.js";
 import { hasMissingAlt } from "../rules/missingAlt.js";
+import {
+  hasInvalidAriaDescribedby,
+  hasInvalidAriaLabelledby,
+} from "../utils/ariaReferences.js";
 import {
   findUsageFile,
   getComponentContext,
@@ -68,6 +73,45 @@ export function analyzeDom(html: string): Violation[] {
         violations.push(violation);
       }
     }
+  }
+
+  for (const element of document.querySelectorAll("[aria-labelledby]")) {
+    if (hasInvalidAriaLabelledby(element, document)) {
+      const violation = createViolation("invalid-aria-labelledby", element);
+
+      if (violation) {
+        violations.push(violation);
+      }
+    }
+  }
+
+  for (const element of document.querySelectorAll("[aria-describedby]")) {
+    if (hasInvalidAriaDescribedby(element, document)) {
+      const violation = createViolation("invalid-aria-describedby", element);
+
+      if (violation) {
+        violations.push(violation);
+      }
+    }
+  }
+
+  const reportedDuplicateIds = new Set<string>();
+
+  for (const element of findDuplicateIdElements(document)) {
+    const violation = createViolation("duplicate-id", element);
+
+    if (!violation) {
+      continue;
+    }
+
+    const dedupeKey = `${violation.componentName}::${violation.instanceKey}`;
+
+    if (reportedDuplicateIds.has(dedupeKey)) {
+      continue;
+    }
+
+    reportedDuplicateIds.add(dedupeKey);
+    violations.push(violation);
   }
 
   return violations;

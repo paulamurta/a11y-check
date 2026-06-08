@@ -4,7 +4,7 @@ import { analyzeDom } from "./analyze/analyzeDom.js";
 import { captureDom } from "./capture/captureDom.js";
 import { formatReport } from "./report/formatReport.js";
 import { groupViolations } from "./report/groupViolations.js";
-import { formatApplicationFound, formatSummary, theme } from "./utils/terminalTheme.js";
+import { formatApplicationFound, formatSuccessSummary, formatSummary, theme } from "./utils/terminalTheme.js";
 
 const APP_URL = "http://localhost:5173";
 
@@ -33,10 +33,11 @@ async function main(): Promise<void> {
   console.log(formatReport(reports));
 
   if (violations.length > 0) {
-    console.log("");
     console.log(formatSummary(reports.length, violations.length));
     process.exit(1);
   }
+
+  console.log(formatSuccessSummary());
 }
 
 main().catch((error: unknown) => {

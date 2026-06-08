@@ -20,6 +20,8 @@ export const theme = {
   separator: colorize((value) => pc.dim(value)),
 };
 
+const SUMMARY_WIDTH = 48;
+
 export function formatApplicationFound(url: string): string {
   const { hostname, port } = new URL(url);
   const hostPort = port ? `${hostname}:${port}` : hostname;
@@ -31,7 +33,36 @@ export function formatSummary(
   componentCount: number,
   issueCount: number,
 ): string {
-  return theme.error(
-    `${componentCount} component(s) · ${issueCount} issue(s)`,
-  );
+  const separator = theme.separator("─".repeat(SUMMARY_WIDTH));
+
+  return [
+    "",
+    separator,
+    "",
+    theme.accent("Summary"),
+    "",
+    theme.error(
+      `✖ ${theme.accent(String(componentCount))} component(s) with issues`,
+    ),
+    theme.error(
+      `✖ ${theme.accent(String(issueCount))} distinct issue(s)`,
+    ),
+    "",
+    separator,
+  ].join("\n");
+}
+
+export function formatSuccessSummary(): string {
+  const separator = theme.separator("─".repeat(SUMMARY_WIDTH));
+
+  return [
+    "",
+    separator,
+    "",
+    theme.accent("Summary"),
+    "",
+    theme.success("✔ No accessibility issues found."),
+    "",
+    separator,
+  ].join("\n");
 }

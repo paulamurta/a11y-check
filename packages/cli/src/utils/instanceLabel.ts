@@ -86,6 +86,18 @@ function describeInputInstance(root: Element): string {
     props.push(`placeholder="${placeholder}"`);
   }
 
+  const labelledBy = input?.getAttribute("aria-labelledby");
+
+  if (labelledBy) {
+    props.push(`aria-labelledby="${labelledBy}"`);
+  }
+
+  const describedBy = input?.getAttribute("aria-describedby");
+
+  if (describedBy) {
+    props.push(`aria-describedby="${describedBy}"`);
+  }
+
   if (input?.hasAttribute("required")) {
     props.push("required");
   }

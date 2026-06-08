@@ -1,5 +1,6 @@
 const instanceKeys = new WeakMap<Element, string>();
 const counters = new Map<string, number>();
+const idCounters = new Map<string, number>();
 
 export function getInstanceKey(
   componentRoot: Element,
@@ -16,8 +17,14 @@ export function getInstanceKey(
     componentRoot.querySelector("input, textarea, select")?.getAttribute("id");
 
   if (declaredId) {
-    instanceKeys.set(componentRoot, declaredId);
-    return declaredId;
+    const usageCount = (idCounters.get(declaredId) ?? 0) + 1;
+    idCounters.set(declaredId, usageCount);
+
+    const key =
+      usageCount === 1 ? declaredId : `${declaredId}#${usageCount}`;
+
+    instanceKeys.set(componentRoot, key);
+    return key;
   }
 
   const next = (counters.get(componentName) ?? 0) + 1;
@@ -31,4 +38,5 @@ export function getInstanceKey(
 
 export function resetInstanceRegistry(): void {
   counters.clear();
+  idCounters.clear();
 }
