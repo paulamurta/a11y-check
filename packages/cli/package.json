@@ -6,7 +6,8 @@
   "scripts": {
     "a11y-check": "tsx src/index.ts",
     "a11y-check:json": "tsx src/index.ts --json",
-    "a11y-check:export": "tsx src/index.ts --json --output a11y-check.json"
+    "a11y-check:export": "tsx src/index.ts --json --output a11y-check.json",
+    "compare:lighthouse": "tsx scripts/compareLighthouse.ts"
   },
   "dependencies": {
     "jsdom": "^29.1.1",

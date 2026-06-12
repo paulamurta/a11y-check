@@ -33,11 +33,11 @@ The app renders four component groups in `src/App.tsx`:
 | Section | Valid examples | Intentional failures |
 |---------|----------------|----------------------|
 | **Buttons** | labeled button | icon-only button, disabled button without visible name |
-| **Inputs** | 2 labeled fields | invalid ARIA references, duplicate `id` (3 problematic instances) |
+| **Inputs** | 2 labeled fields | missing label, invalid ARIA references, duplicate `id` (4 problematic instances) |
 | **Links** | text link | icon-only link, link without accessible name |
 | **Avatars** | descriptive `alt` | missing `alt`, generic `alt` (`"image"`) |
 
-With the current demo, the CLI reports **12 distinct issues** across **4 components**.
+With the current demo, the CLI reports **14 distinct issues** across **4 components**.
 
 ## Components
 

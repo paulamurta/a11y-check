@@ -76,12 +76,26 @@ npm run a11y-check:json
 
 ### Comparing with Lighthouse
 
-With the sample app running:
+With the sample app running (`npm run dev` in `packages/sample-react-app`):
 
 ```bash
-npx lighthouse http://localhost:5173 --output json --output-path lighthouse.json
+cd packages/cli
+
+# 1. a11y-check report
 npm run a11y-check:export
+
+# 2. Lighthouse report
+npx lighthouse http://localhost:5173 --output json --output-path lighthouse.json --chrome-flags="--headless"
+
+# 3. Comparison table
+npm run compare:lighthouse
 ```
+
+This writes in `packages/cli/`:
+
+- `a11y-check.json` — your tool's report
+- `lighthouse.json` — Lighthouse report
+- `comparison.json` and `comparison.md` — rule-by-rule table for the TCC analysis
 
 Compare counts from `byRule` in `a11y-check.json` with the matching audits in `lighthouse.json`. Only compare rules that exist in both tools.
 
@@ -100,6 +114,7 @@ Analysis is performed on the **rendered DOM**, not on static TSX source code.
 | Rule | Target | Condition |
 |------|--------|-----------|
 | Missing accessible name | `button`, `[role="button"]`, `a[href]`, `input`, `textarea`, `select` | No visible label, `aria-label`, or resolvable `aria-labelledby` |
+| Missing label | `input`, `textarea`, `select` | No associated `<label>`, `aria-label`, or valid `aria-labelledby` |
 | Missing or generic alt | `img` | `alt` missing, empty, or generic (e.g. `image`, `photo`, `avatar`) |
 | Duplicate id | any element with `id` | The same `id` appears more than once in the document |
 | Invalid aria-labelledby | any element with `aria-labelledby` | At least one referenced id does not exist in the document |
@@ -146,6 +161,7 @@ src/
 | `npm run a11y-check` | Capture the rendered DOM and print the accessibility report |
 | `npm run a11y-check:json` | Print the report as JSON to stdout |
 | `npm run a11y-check:export` | Write `a11y-check.json` in the current directory |
+| `npm run compare:lighthouse` | Compare `a11y-check.json` with `lighthouse.json` |
 
 ## Tech stack
 
@@ -160,5 +176,4 @@ src/
 
 - More accessibility rules (e.g. empty button, dedicated missing label)
 - Optional `data-usage-line` for instance line numbers
-- Automated Lighthouse comparison script
 - CI/CD integration

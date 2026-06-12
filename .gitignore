@@ -6,4 +6,7 @@ dist-ssr
 
 # Generated reports
 packages/cli/a11y-check.json
+packages/cli/lighthouse.json
+packages/cli/comparison.json
+packages/cli/comparison.md
 lighthouse.json

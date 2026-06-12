@@ -58,7 +58,7 @@ The terminal report has three parts: capture status, component blocks grouped by
 Summary
 
 ✖ 4 component(s) with issues
-✖ 12 distinct issue(s)
+✖ 14 distinct issue(s)
 
 ────────────────────────────────────────────────
 ```
@@ -92,6 +92,25 @@ The JSON includes:
 
 See the [CLI README](packages/cli/README.md#json-export) for preview mode and custom output paths.
 
+## Lighthouse comparison
+
+With the sample app running (`npm run dev` in `packages/sample-react-app`):
+
+```bash
+cd packages/cli
+
+# 1. a11y-check report
+npm run a11y-check:export
+
+# 2. Lighthouse report
+npx lighthouse http://localhost:5173 --output json --output-path lighthouse.json --chrome-flags="--headless"
+
+# 3. Comparison table
+npm run compare:lighthouse
+```
+
+Generated files live in `packages/cli/` (`a11y-check.json`, `lighthouse.json`, `comparison.json`, `comparison.md`). See the [CLI README](packages/cli/README.md#comparing-with-lighthouse) for details.
+
 ## Accessibility rules
 
 The CLI analyzes the **rendered DOM** (not static TSX) and currently checks:
@@ -99,6 +118,7 @@ The CLI analyzes the **rendered DOM** (not static TSX) and currently checks:
 | Rule | What it detects |
 |------|-----------------|
 | Missing accessible name | Buttons, links, and form controls without a label, `aria-label`, or valid `aria-labelledby` |
+| Missing label | Form controls without an associated `<label>`, `aria-label`, or valid `aria-labelledby` |
 | Missing or generic alt | Images with missing, empty, or generic `alt` text |
 | Duplicate id | The same `id` used more than once in the document |
 | Invalid aria-labelledby | `aria-labelledby` pointing to ids that do not exist |
