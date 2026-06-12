@@ -21,6 +21,13 @@ function resolveAssociatedLabel(
   return "";
 }
 
+export function hasAssociatedLabel(
+  element: Element,
+  document: Document,
+): boolean {
+  return resolveAssociatedLabel(element, document).length > 0;
+}
+
 function resolveLabelledBy(element: Element, document: Document): string {
   const labelledBy = element.getAttribute("aria-labelledby");
 

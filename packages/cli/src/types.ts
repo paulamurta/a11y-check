@@ -1,5 +1,6 @@
 export type RuleId =
   | "missing-accessible-name"
+  | "missing-label"
   | "missing-alt"
   | "duplicate-id"
   | "invalid-aria-labelledby"

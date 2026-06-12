@@ -3,6 +3,7 @@ import { JSDOM } from "jsdom";
 import type { Violation } from "../types.js";
 import { findDuplicateIdElements } from "../rules/duplicateId.js";
 import { hasMissingAccessibleName } from "../rules/missingAccessibleName.js";
+import { hasMissingLabel } from "../rules/missingLabel.js";
 import { hasMissingAlt } from "../rules/missingAlt.js";
 import {
   hasInvalidAriaDescribedby,
@@ -58,6 +59,18 @@ export function analyzeDom(html: string): Violation[] {
   )) {
     if (hasMissingAccessibleName(element, document)) {
       const violation = createViolation("missing-accessible-name", element);
+
+      if (violation) {
+        violations.push(violation);
+      }
+    }
+  }
+
+  for (const element of document.querySelectorAll(
+    "input, textarea, select",
+  )) {
+    if (hasMissingLabel(element, document)) {
+      const violation = createViolation("missing-label", element);
 
       if (violation) {
         violations.push(violation);

@@ -64,6 +64,12 @@ export default function App() {
           />
 
           <Input
+            id="input-no-label"
+            invalidAccessibility
+            placeholder="Field without label"
+          />
+
+          <Input
             id="input-invalid-aria"
             label="Notes"
             placeholder="Enter your notes"
